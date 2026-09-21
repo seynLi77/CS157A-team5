@@ -1,3 +1,6 @@
+-- Initializes the job-posting table with sample data.
+-- Author: Elaine
+
 USE lockedin_db;
 
 CREATE TABLE job_postings (

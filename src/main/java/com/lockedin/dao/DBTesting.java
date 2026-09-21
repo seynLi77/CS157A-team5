@@ -4,7 +4,17 @@ import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.ResultSet;
 
+/**
+ * Runs a basic database connection and job-posting table test.
+ * 
+ * @author Elaine
+ */
 public class DBTesting {
+	/**
+	 * Creates sample job postings and prints the stored records.
+	 *
+	 * @param args command-line arguments, which are not used
+	 */
     public static void main(String[] args) {
 	    try {
 	        Connection conn = DBConnection.getConnection();
