@@ -1,8 +1,8 @@
 package com.lockedin.dao;
 
 import java.sql.Connection;
-import java.sql.Statement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 /**
  * Runs a basic database connection and job-posting table test.
@@ -34,10 +34,22 @@ public class DBTesting {
 	
 	        stmt.executeUpdate(
 	            "INSERT INTO job_postings " +
-	            "(job_id, is_open, company_name, job_name, job_location, job_skill) VALUES " +
-	            "(1, TRUE, 'Apple', 'Software Engineer', 'Cupertino', 'Programming'), " +
-	            "(2, FALSE, 'Google', 'Data Engineer', 'Sunnyvale', 'SQL'), " +
-	            "(3, TRUE, 'SJSU', 'Instructor', 'San Jose', 'Teaching')"
+	           "(job_id, is_open, company_name, job_name, job_location, job_skill) VALUES " +
+				"(1, TRUE, 'Apple', 'Software Engineer', 'Cupertino', 'Programming'), " +
+				"(2, FALSE, 'Google', 'Data Engineer', 'Sunnyvale', 'SQL'), " +
+				"(3, TRUE, 'SJSU', 'Instructor', 'San Jose', 'Teaching'), " +
+				"(4, TRUE, 'Meta', 'Data Scientist', 'Menlo Park', 'Python'), " +
+				"(5, TRUE, 'Microsoft', 'Software Developer', 'Mountain View', 'Java'), " +
+				"(6, FALSE, 'Amazon', 'Business Analyst', 'San Francisco', 'Excel'), " +
+				"(7, TRUE, 'NVIDIA', 'Machine Learning Engineer', 'Santa Clara', 'Machine Learning'), " +
+				"(8, TRUE, 'Netflix', 'Data Analyst', 'Los Gatos', 'Data Analysis'), " +
+				"(9, FALSE, 'Tesla', 'Database Administrator', 'Palo Alto', 'MySQL'), " +
+				"(10, TRUE, 'Adobe', 'UX Designer', 'San Jose', 'UI/UX'), " +
+				"(11, TRUE, 'Cisco', 'Network Engineer', 'San Jose', 'Networking'), " +
+				"(12, FALSE, 'LinkedIn', 'Product Analyst', 'Sunnyvale', 'Analytics'), " +
+				"(13, TRUE, 'PayPal', 'Financial Analyst', 'San Jose', 'Finance'), " +
+				"(14, TRUE, 'Intuit', 'Software Engineer Intern', 'Mountain View', 'Java'), " +
+				"(15, FALSE, 'Salesforce', 'Cloud Engineer', 'San Francisco', 'Cloud Computing')"
 	        );
 	
 	        ResultSet rs = stmt.executeQuery(
