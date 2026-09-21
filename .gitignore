@@ -1,4 +1,8 @@
 target/
-db.properties
+bin/
 .vscode/
+.settings/
+.project
+.classpath
+db.properties
 MysqlCon.java
