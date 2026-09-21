@@ -7,6 +7,45 @@
 document.addEventListener('DOMContentLoaded', function () {
 
   // -------------------------------------------------------------
+  // Nav blends into hero on load, becomes solid once scrolled
+  // -------------------------------------------------------------
+  var navbar = document.querySelector('.navbar');
+  if (navbar) {
+    var scrollThreshold = 40;
+
+    function updateNavState() {
+      if (window.scrollY > scrollThreshold) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    }
+
+    updateNavState();
+    window.addEventListener('scroll', updateNavState, { passive: true });
+  }
+
+  // -------------------------------------------------------------
+  // Mobile hamburger menu
+  // -------------------------------------------------------------
+  var hamburgerBtn = document.getElementById('hamburger-btn');
+  var mobileMenu = document.getElementById('mobile-menu');
+  if (hamburgerBtn && mobileMenu) {
+    hamburgerBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      var isOpen = mobileMenu.classList.toggle('open');
+      hamburgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        mobileMenu.classList.remove('open');
+        hamburgerBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // -------------------------------------------------------------
   // Typewriter placeholder animation on the search bar
   // -------------------------------------------------------------
   var examples = [

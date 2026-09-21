@@ -20,7 +20,22 @@
 <nav class="navbar">
   <div class="wrap">
     <div class="logo">
-      <span class="logo-mark">Li</span>
+      <span class="logo-mark">
+        <svg width="26" height="26" viewBox="0 0 24 24">
+          <defs>
+            <mask id="lockedin-keyhole-mask">
+              <rect x="0" y="0" width="24" height="24" fill="#FFFFFF"/>
+              <circle cx="12" cy="16.4" r="1.6" fill="#000000"/>
+              <path d="M10.9 19.2H13.1L12.6 22.0C12.6 22.5 11.4 22.5 11.4 22.0L10.9 19.2Z" fill="#000000"/>
+            </mask>
+          </defs>
+          <!-- shackle, symmetric arch matching reference -->
+          <path d="M7 9V8C7 4.5 9.5 2 12 2C14.5 2 17 4.5 17 8V9"
+                stroke="#0A66C2" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <!-- body, gapped below the shackle, keyhole cut through as transparent, dot separated from stem -> reads as "i" -->
+          <rect x="3.5" y="11" width="17" height="12" rx="4" fill="#0A66C2" mask="url(#lockedin-keyhole-mask)"/>
+        </svg>
+      </span>
       LockedIn
     </div>
     <div class="nav-links">
@@ -31,7 +46,19 @@
     <div class="nav-actions">
       <a href="#" class="btn btn-ghost" data-dummy-link>Log in</a>
       <a href="#" class="btn btn-primary" data-dummy-link>Sign up</a>
+      <button class="hamburger" id="hamburger-btn" aria-label="Menu" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
     </div>
+  </div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#" data-dummy-link>About us</a>
+    <a href="#" data-dummy-link>Job seekers</a>
+    <a href="#" data-dummy-link>Employers</a>
   </div>
 </nav>
 
@@ -40,7 +67,7 @@
 <!-- ============================================================ -->
 <section class="hero">
   <div class="wrap">
-    <h1>Lock in.<br>Find a job.</h1>
+    <h1>Lock in.<br><span class="accent">Find a job.</span></h1>
     <p class="stat-line"><strong>${openJobCount}</strong> jobs ready to be found.</p>
 
     <form id="dummy-search-form" class="search-bar">
@@ -120,7 +147,50 @@
 </section>
 
 <!-- ============================================================ -->
-<!-- JOB LIST (dummy, highest-wage examples)                       -->
+<!-- RECOMMENDER PREVIEW (flipped layout from dashboard section)  -->
+<!-- ============================================================ -->
+<section class="section dashboard-section recommender-section">
+  <div class="wrap">
+    <div class="recommender-mock">
+      <div class="match-row">
+        <div>
+          <div class="title">Backend Engineer Intern</div>
+          <div class="company">Meridian Labs · Remote</div>
+        </div>
+        <div class="match-score"><span class="ring" style="--pct:94" data-pct="94"></span></div>
+      </div>
+      <div class="match-row">
+        <div>
+          <div class="title">Software Engineer</div>
+          <div class="company">Apple · Cupertino</div>
+        </div>
+        <div class="match-score"><span class="ring" style="--pct:88" data-pct="88"></span></div>
+      </div>
+      <div class="match-row">
+        <div>
+          <div class="title">Full Stack Developer</div>
+          <div class="company">Coastline Digital · Remote</div>
+        </div>
+        <div class="match-score"><span class="ring" style="--pct:81" data-pct="81"></span></div>
+      </div>
+      <div class="match-row">
+        <div>
+          <div class="title">Data Engineer</div>
+          <div class="company">Google · Sunnyvale</div>
+        </div>
+        <div class="match-score"><span class="ring" style="--pct:76" data-pct="76"></span></div>
+      </div>
+    </div>
+    <div class="dashboard-copy">
+      <h2>Stop searching. Start matching.</h2>
+      <p>LockedIn ranks open roles against your skills and location, so the jobs at the top of your feed are ones you're actually qualified for — not just the newest postings.</p>
+      <a href="#" class="btn btn-primary" data-dummy-link>See your matches</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- JOB LIST (dummy, highest-wage examples, vertical marquee)    -->
 <!-- ============================================================ -->
 <section class="section">
   <div class="wrap">
@@ -128,36 +198,93 @@
       <h2>Top-paying roles open right now</h2>
       <p>A few of the highest-paying openings on LockedIn this week.</p>
     </div>
-    <div class="job-grid">
-      <div class="job-card">
-        <div class="job-title">Software Engineer</div>
-        <div class="job-wage">Up to $85/hr</div>
-        <div class="job-quals">Apple · Cupertino · Bachelor's</div>
-      </div>
-      <div class="job-card">
-        <div class="job-title">Data Engineer</div>
-        <div class="job-wage">Up to $78/hr</div>
-        <div class="job-quals">Google · Sunnyvale · Bachelor's · Master's</div>
-      </div>
-      <div class="job-card">
-        <div class="job-title">Backend Developer</div>
-        <div class="job-wage">Up to $70/hr</div>
-        <div class="job-quals">Coastline Digital · Remote · Bachelor's</div>
-      </div>
-      <div class="job-card">
-        <div class="job-title">Product Designer</div>
-        <div class="job-wage">Up to $65/hr</div>
-        <div class="job-quals">Harbor &amp; Finch · San Jose · Bachelor's</div>
-      </div>
-      <div class="job-card">
-        <div class="job-title">QA Analyst</div>
-        <div class="job-wage">Up to $52/hr</div>
-        <div class="job-quals">Pinehaven Systems · Remote · Associate's</div>
-      </div>
-      <div class="job-card">
-        <div class="job-title">Instructor</div>
-        <div class="job-wage">Up to $60/hr</div>
-        <div class="job-quals">SJSU · San Jose · Master's · Ph.D.</div>
+    <div class="job-marquee-outer">
+      <div class="job-marquee-track">
+        <div class="job-card">
+          <div>
+            <div class="job-title">Software Engineer</div>
+            <div class="job-quals">Apple · Cupertino · Bachelor's</div>
+          </div>
+          <div class="job-wage">Up to $85/hr</div>
+        </div>
+        <div class="job-card">
+          <div>
+            <div class="job-title">Data Engineer</div>
+            <div class="job-quals">Google · Sunnyvale · Bachelor's · Master's</div>
+          </div>
+          <div class="job-wage">Up to $78/hr</div>
+        </div>
+        <div class="job-card">
+          <div>
+            <div class="job-title">Backend Developer</div>
+            <div class="job-quals">Coastline Digital · Remote · Bachelor's</div>
+          </div>
+          <div class="job-wage">Up to $70/hr</div>
+        </div>
+        <div class="job-card">
+          <div>
+            <div class="job-title">Product Designer</div>
+            <div class="job-quals">Harbor &amp; Finch · San Jose · Bachelor's</div>
+          </div>
+          <div class="job-wage">Up to $65/hr</div>
+        </div>
+        <div class="job-card">
+          <div>
+            <div class="job-title">QA Analyst</div>
+            <div class="job-quals">Pinehaven Systems · Remote · Associate's</div>
+          </div>
+          <div class="job-wage">Up to $52/hr</div>
+        </div>
+        <div class="job-card">
+          <div>
+            <div class="job-title">Instructor</div>
+            <div class="job-quals">SJSU · San Jose · Master's · Ph.D.</div>
+          </div>
+          <div class="job-wage">Up to $60/hr</div>
+        </div>
+        <!-- duplicated for seamless vertical loop -->
+        <div class="job-card">
+          <div>
+            <div class="job-title">Software Engineer</div>
+            <div class="job-quals">Apple · Cupertino · Bachelor's</div>
+          </div>
+          <div class="job-wage">Up to $85/hr</div>
+        </div>
+        <div class="job-card">
+          <div>
+            <div class="job-title">Data Engineer</div>
+            <div class="job-quals">Google · Sunnyvale · Bachelor's · Master's</div>
+          </div>
+          <div class="job-wage">Up to $78/hr</div>
+        </div>
+        <div class="job-card">
+          <div>
+            <div class="job-title">Backend Developer</div>
+            <div class="job-quals">Coastline Digital · Remote · Bachelor's</div>
+          </div>
+          <div class="job-wage">Up to $70/hr</div>
+        </div>
+        <div class="job-card">
+          <div>
+            <div class="job-title">Product Designer</div>
+            <div class="job-quals">Harbor &amp; Finch · San Jose · Bachelor's</div>
+          </div>
+          <div class="job-wage">Up to $65/hr</div>
+        </div>
+        <div class="job-card">
+          <div>
+            <div class="job-title">QA Analyst</div>
+            <div class="job-quals">Pinehaven Systems · Remote · Associate's</div>
+          </div>
+          <div class="job-wage">Up to $52/hr</div>
+        </div>
+        <div class="job-card">
+          <div>
+            <div class="job-title">Instructor</div>
+            <div class="job-quals">SJSU · San Jose · Master's · Ph.D.</div>
+          </div>
+          <div class="job-wage">Up to $60/hr</div>
+        </div>
       </div>
     </div>
     <div class="job-list-cta">
@@ -175,21 +302,21 @@
   </div>
   <div class="carousel-track-outer">
     <div class="carousel-track">
-      <div class="employer-badge">Apple</div>
-      <div class="employer-badge">Google</div>
-      <div class="employer-badge">SJSU</div>
-      <div class="employer-badge">Meridian Labs</div>
-      <div class="employer-badge">Harbor &amp; Finch</div>
-      <div class="employer-badge">Pinehaven Systems</div>
-      <div class="employer-badge">Coastline Digital</div>
+      <div class="employer-badge"><span class="badge-mark">A</span></div>
+      <div class="employer-badge"><span class="badge-mark">G</span></div>
+      <div class="employer-badge"><span class="badge-mark">S</span></div>
+      <div class="employer-badge"><span class="badge-mark">M</span></div>
+      <div class="employer-badge"><span class="badge-mark">H</span></div>
+      <div class="employer-badge"><span class="badge-mark">P</span></div>
+      <div class="employer-badge"><span class="badge-mark">C</span></div>
       <!-- duplicated for seamless scroll loop -->
-      <div class="employer-badge">Apple</div>
-      <div class="employer-badge">Google</div>
-      <div class="employer-badge">SJSU</div>
-      <div class="employer-badge">Meridian Labs</div>
-      <div class="employer-badge">Harbor &amp; Finch</div>
-      <div class="employer-badge">Pinehaven Systems</div>
-      <div class="employer-badge">Coastline Digital</div>
+      <div class="employer-badge"><span class="badge-mark">A</span></div>
+      <div class="employer-badge"><span class="badge-mark">G</span></div>
+      <div class="employer-badge"><span class="badge-mark">S</span></div>
+      <div class="employer-badge"><span class="badge-mark">M</span></div>
+      <div class="employer-badge"><span class="badge-mark">H</span></div>
+      <div class="employer-badge"><span class="badge-mark">P</span></div>
+      <div class="employer-badge"><span class="badge-mark">C</span></div>
     </div>
   </div>
 </section>
