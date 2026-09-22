@@ -19,34 +19,38 @@ import java.sql.SQLException;
 @WebServlet("/home")
 public class HomeServlet extends HttpServlet {
 
-    private final JobDAO jobDAO = new JobDAO();
+	private final JobDAO jobDAO = new JobDAO();
 
-    @Override
-    protected void doGet(
-            HttpServletRequest request,
-            HttpServletResponse response
-    ) throws ServletException, IOException {
+	/**
+	 * Retrieves the number of open jobs and forwards it to the home view.
+	 *
+	 * @param request  HTTP request received from the client
+	 * @param response HTTP response used to forward to the home view
+	 * @throws ServletException if the open job count cannot be retrieved or
+	 *                          the request cannot be forwarded
+	 * @throws IOException      if an input/output error occurs while forwarding
+	 */
+	@Override
+	protected void doGet(
+			HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 
-        try {
+		try {
 
-            int openJobCount =
-                    jobDAO.getOpenJobCount();
+			int openJobCount = jobDAO.getOpenJobCount();
 
-            request.setAttribute(
-                    "openJobCount",
-                    openJobCount
-            );
+			request.setAttribute(
+					"openJobCount",
+					openJobCount);
 
-            request.getRequestDispatcher(
-                    "/WEB-INF/views/home.jsp"
-            ).forward(request, response);
+			request.getRequestDispatcher(
+					"/WEB-INF/views/home.jsp").forward(request, response);
 
-        } catch (SQLException e) {
+		} catch (SQLException e) {
 
-            throw new ServletException(
-                    "Unable to retrieve open job count.",
-                    e
-            );
-        }
-    }
+			throw new ServletException(
+					"Unable to retrieve open job count.",
+					e);
+		}
+	}
 }
