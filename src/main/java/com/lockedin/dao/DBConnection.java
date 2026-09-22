@@ -3,10 +3,12 @@ package com.lockedin.dao;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
 
 /**
- * Loads database settings and creates connections to the application's database.
+ * Loads database settings and creates connections to the application's
+ * database.
  *
  * @author Elaine
  */
@@ -20,28 +22,41 @@ public class DBConnection {
         try {
             Properties properties = new Properties();
 
-            InputStream input = DBConnection.class
+            try (InputStream input = DBConnection.class
                     .getClassLoader()
-                    .getResourceAsStream("db.properties");
+                    .getResourceAsStream("db.properties")) {
 
-            properties.load(input);
+                if (input == null) {
+                    throw new RuntimeException(
+                            "db.properties was not found in src/main/resources");
+                }
+
+                properties.load(input);
+            }
 
             URL = properties.getProperty("db.url");
             USERNAME = properties.getProperty("db.user");
             PASSWORD = properties.getProperty("db.password");
 
         } catch (Exception e) {
-            throw new RuntimeException("Failed to load database configuration", e);
+            throw new RuntimeException(
+                    "Failed to load database configuration", e);
         }
     }
 
     /**
-     * Creates a database connection using the credentials from db.properties.
+     * Opens a connection to the configured MySQL database.
      *
-     * @return a connection to the configured database
-     * @throws Exception if the database driver cannot establish a connection
+     * @return a new database connection
+     * @throws SQLException if the JDBC driver cannot be loaded or the
+     *                      connection cannot be established
      */
-    public static Connection getConnection() throws Exception {
+    public static Connection getConnection() throws SQLException {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new SQLException("MySQL JDBC driver not found", e);
+        }
         return DriverManager.getConnection(URL, USERNAME, PASSWORD);
     }
 }

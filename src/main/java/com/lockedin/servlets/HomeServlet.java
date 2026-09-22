@@ -1,10 +1,56 @@
 package com.lockedin.servlets;
 
+import com.lockedin.dao.JobDAO;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.sql.SQLException;
+
 /**
  * Handles requests for the application's home page.
- * 
+ *
  * @author Jumana
  */
-public class HomeServlet {
-	// TODO: Implement servlet routing and forward requests to home.jsp.
+@WebServlet("/home")
+public class HomeServlet extends HttpServlet {
+
+	private final JobDAO jobDAO = new JobDAO();
+
+	/**
+	 * Retrieves the number of open jobs and forwards it to the home view.
+	 *
+	 * @param request  HTTP request received from the client
+	 * @param response HTTP response used to forward to the home view
+	 * @throws ServletException if the open job count cannot be retrieved or
+	 *                          the request cannot be forwarded
+	 * @throws IOException      if an input/output error occurs while forwarding
+	 */
+	@Override
+	protected void doGet(
+			HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+
+		try {
+
+			int openJobCount = jobDAO.getOpenJobCount();
+
+			request.setAttribute(
+					"openJobCount",
+					openJobCount);
+
+			request.getRequestDispatcher(
+					"/WEB-INF/views/home.jsp").forward(request, response);
+
+		} catch (SQLException e) {
+
+			throw new ServletException(
+					"Unable to retrieve open job count.",
+					e);
+		}
+	}
 }
