@@ -1,5 +1,10 @@
 package com.lockedin.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  * Provides data-access operations for job postings.
  *
@@ -8,10 +13,28 @@ package com.lockedin.dao;
 public class JobDAO {
 
     /**
-     * Temporarily returns a hardcoded number of open jobs
-     * while servlet/JSP integration is being tested.
+     * Returns the number of currently open job postings.
+     *
+     * @return number of open jobs
+     * @throws SQLException if the database query fails
      */
-    public int getOpenJobCount() {
-        return 10;
+    public int getOpenJobCount() throws SQLException {
+
+        String sql =
+                "<DATABASE TEAMMATE'S TESTED QUERY GOES HERE>";
+
+        try (
+            Connection connection = DBConnection.getConnection();
+            PreparedStatement statement =
+                    connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery()
+        ) {
+
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+
+            return 0;
+        }
     }
 }
