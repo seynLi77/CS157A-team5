@@ -6,4 +6,5 @@ package com.lockedin.servlets;
  * @author Jumana
  */
 public class HomeServlet {
+	// TODO: Implement servlet routing and forward requests to home.jsp.
 }
