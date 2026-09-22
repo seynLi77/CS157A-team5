@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * Handles requests for the application's home page.
@@ -26,11 +27,26 @@ public class HomeServlet extends HttpServlet {
             HttpServletResponse response
     ) throws ServletException, IOException {
 
-        int openJobCount = jobDAO.getOpenJobCount();
+        try {
 
-        request.setAttribute("openJobCount", openJobCount);
+            int openJobCount =
+                    jobDAO.getOpenJobCount();
 
-        request.getRequestDispatcher("/WEB-INF/views/home.jsp")
-                .forward(request, response);
+            request.setAttribute(
+                    "openJobCount",
+                    openJobCount
+            );
+
+            request.getRequestDispatcher(
+                    "/WEB-INF/views/home.jsp"
+            ).forward(request, response);
+
+        } catch (SQLException e) {
+
+            throw new ServletException(
+                    "Unable to retrieve open job count.",
+                    e
+            );
+        }
     }
 }
