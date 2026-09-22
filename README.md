@@ -42,11 +42,13 @@ CS157A-team5/
 │     │  └─ com/
 │     │     └─ lockedin/
 │     │        ├─ dao/
-│     │        │  ├─ DBConnection.java  # Opens DB connection
-│     │        │  ├─ DBTesting.java     # Tests DB connection
 │     │        │  └─ JobDAO.java        # Job-related queries
-│     │        └─ servlets/
-│     │           └─ HomeServlet.java   # Handles requests to home page
+│     │        ├─ servlets/
+│     │        │  └─ HomeServlet.java   # Handles requests to home page
+│     │        ├─ test/
+│     │        │  └─ DBTesting.java     # Tests DB connection
+│     │        └─ util/
+│     │           └─ DBConnection.java  # Opens DB connection
 │     ├─ resources/
 │     │  └─ db.properties.example       # Format for DB credentials (gitignored)
 │     └─ webapp/
