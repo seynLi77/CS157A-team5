@@ -1,8 +1,10 @@
-package com.lockedin.dao;
+package com.lockedin.test;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+
+import com.lockedin.util.DBConnection;
 
 /**
  * Runs a basic database connection and job-posting table test.

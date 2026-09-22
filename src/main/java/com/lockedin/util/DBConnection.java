@@ -1,4 +1,4 @@
-package com.lockedin.dao;
+package com.lockedin.util;
 
 import java.io.InputStream;
 import java.sql.Connection;

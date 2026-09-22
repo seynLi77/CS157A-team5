@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.lockedin.util.DBConnection;
+
 /**
  * Provides data-access operations for job postings.
  *
