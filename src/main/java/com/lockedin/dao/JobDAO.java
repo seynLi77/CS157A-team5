@@ -12,29 +12,28 @@ import java.sql.SQLException;
  */
 public class JobDAO {
 
-    /**
-     * Returns the number of currently open job postings.
-     *
-     * @return number of open jobs
-     * @throws SQLException if the database query fails
-     */
-    public int getOpenJobCount() throws SQLException {
+	/**
+	 * Returns the number of currently open job postings.
+	 *
+	 * @return number of open jobs
+	 * @throws SQLException if the database query fails
+	 */
+	public int getOpenJobCount() throws SQLException {
 
-        String sql =
-                "<DATABASE TEAMMATE'S TESTED QUERY GOES HERE>";
+		String sql = "SELECT COUNT(*) " +
+				"FROM job_postings " +
+				"WHERE is_open = TRUE";
 
-        try (
-            Connection connection = DBConnection.getConnection();
-            PreparedStatement statement =
-                    connection.prepareStatement(sql);
-            ResultSet resultSet = statement.executeQuery()
-        ) {
+		try (
+				Connection connection = DBConnection.getConnection();
+				PreparedStatement statement = connection.prepareStatement(sql);
+				ResultSet resultSet = statement.executeQuery()) {
 
-            if (resultSet.next()) {
-                return resultSet.getInt(1);
-            }
+			if (resultSet.next()) {
+				return resultSet.getInt(1);
+			}
 
-            return 0;
-        }
-    }
+			return 0;
+		}
+	}
 }
