@@ -15,7 +15,9 @@
 
     String role = "";
 
-    if (profile != null && profile.get("role") != null) {
+    if (profile != null &&
+            profile.get("role") != null) {
+
         role = String.valueOf(profile.get("role"));
     }
 
@@ -26,16 +28,19 @@
             (String) request.getAttribute("success");
 
     List<Map<String, Object>> skills =
-            (List<Map<String, Object>>) request.getAttribute("skills");
+            (List<Map<String, Object>>)
+                    request.getAttribute("skills");
 
     Set<Integer> selectedSkillIds =
-            (Set<Integer>) request.getAttribute("selectedSkillIds");
+            (Set<Integer>)
+                    request.getAttribute("selectedSkillIds");
 %>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta name="viewport"
@@ -45,17 +50,73 @@
 
     <link rel="stylesheet"
           href="<%= request.getContextPath() %>/css/profile.css">
+
+    <style>
+        .skill-select {
+            display: none;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .skill-option {
+            cursor: pointer;
+        }
+
+        .skill-option input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .skill-card {
+            display: block;
+            padding: 10px 12px;
+            border: 1px solid #38434B;
+            border-radius: 10px;
+            background: #22272B;
+            color: #A7B0B6;
+            font-size: 13px;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .skill-card:hover {
+            border-color: #70B5F9;
+            color: #FFFFFF;
+        }
+
+        .skill-option input:checked + .skill-card {
+            background: #0A66C2;
+            border-color: #0A66C2;
+            color: #FFFFFF;
+            font-weight: 600;
+        }
+
+        @media (max-width: 700px) {
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+
 </head>
 
 <body>
 
 <nav class="navbar">
+
     <div class="nav-content">
 
         <a class="logo"
            href="<%= request.getContextPath() %>/dashboard">
 
             <span class="logo-mark">
+
                 <svg width="26"
                      height="26"
                      viewBox="0 0 24 24">
@@ -77,6 +138,7 @@
                             <path d="M10.9 19.2H13.1L12.6 22.0
                                      C12.6 22.5 11.4 22.5 11.4 22.0Z"
                                   fill="#000000"/>
+
                         </mask>
                     </defs>
 
@@ -94,11 +156,15 @@
                           rx="4"
                           fill="#0A66C2"
                           mask="url(#profile-keyhole-mask)"/>
+
                 </svg>
+
             </span>
 
             LockedIn
+
         </a>
+
 
         <div class="nav-actions">
 
@@ -115,6 +181,7 @@
         </div>
 
     </div>
+
 </nav>
 
 
@@ -184,6 +251,7 @@
                                            ? ""
                                            : profile.get("first_name") %>"
                                    required>
+
                         </div>
 
 
@@ -200,6 +268,7 @@
                                            ? ""
                                            : profile.get("last_name") %>"
                                    required>
+
                         </div>
 
                     </div>
@@ -280,6 +349,7 @@
                                    value="<%= profile.get("location") == null
                                            ? ""
                                            : profile.get("location") %>">
+
                         </div>
 
 
@@ -296,6 +366,7 @@
                                            ? ""
                                            : profile.get("resume_link") %>"
                                    placeholder="Paste your resume link">
+
                         </div>
 
 
@@ -309,6 +380,7 @@
                                       name="experience"><%= profile.get("experience") == null
                                       ? ""
                                       : profile.get("experience") %></textarea>
+
                         </div>
 
 
@@ -322,49 +394,56 @@
                                       name="education"><%= profile.get("education") == null
                                       ? ""
                                       : profile.get("education") %></textarea>
+
                         </div>
 
 
                         <div class="form-group">
 
-                            <label for="skill_ids">
+                            <label>
                                 Skills
                             </label>
 
-                            <select id="skill_ids"
-                                    name="skill_ids"
-                                    multiple
-                                    size="8">
+                            <div class="skills-grid">
 
                                 <% if (skills != null) { %>
 
                                     <% for (Map<String, Object> skill : skills) {
 
                                         int skillId =
-                                                (Integer) skill.get("skill_id");
+                                                (Integer)
+                                                        skill.get("skill_id");
 
                                         String skillName =
-                                                String.valueOf(skill.get("name"));
+                                                String.valueOf(
+                                                        skill.get("name"));
 
                                         boolean selected =
                                                 selectedSkillIds != null
-                                                && selectedSkillIds.contains(skillId);
+                                                && selectedSkillIds
+                                                .contains(skillId);
                                     %>
 
-                                        <option value="<%= skillId %>"
-                                                <%= selected ? "selected" : "" %>>
-                                            <%= skillName %>
-                                        </option>
+                                        <label class="skill-option">
+
+                                            <input type="checkbox"
+                                                   name="skill_ids"
+                                                   value="<%= skillId %>"
+                                                   <%= selected
+                                                       ? "checked"
+                                                       : "" %>>
+
+                                            <span class="skill-card">
+                                                <%= skillName %>
+                                            </span>
+
+                                        </label>
 
                                     <% } %>
 
                                 <% } %>
 
-                            </select>
-
-                            <small>
-                                Hold Ctrl or Command to select multiple skills.
-                            </small>
+                            </div>
 
                         </div>
 
@@ -395,6 +474,7 @@
                                            ? ""
                                            : profile.get("company") %>"
                                    required>
+
                         </div>
 
 
@@ -411,6 +491,7 @@
                                            ? ""
                                            : profile.get("industry") %>"
                                    required>
+
                         </div>
 
                     </div>
@@ -427,7 +508,8 @@
                         </h2>
 
                         <p>
-                            Administrator profile information is managed by the system.
+                            Administrator profile information is managed
+                            by the system.
                         </p>
 
                     </div>
@@ -456,10 +538,12 @@
 
 
 <footer>
+
     <p>
         © 2026 LockedIn.
         A student project — CS157A Team 5.
     </p>
+
 </footer>
 
 </body>
