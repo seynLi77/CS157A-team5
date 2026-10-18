@@ -8,9 +8,9 @@ import java.sql.SQLException;
 import com.lockedin.util.DBConnection;
 
 /**
- * Provides data-access operations for login/sign up.
+ * Provides data-access operations for job postings.
  *
- * @author Elaine
+ * @author Jumana
  */
 public class JobDAO {
 
