@@ -263,3 +263,58 @@ footer {
 .logout-button:hover {
     background-color: #084F96;
 }
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.skill-option {
+    cursor: pointer;
+}
+
+.skill-option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.skill-card {
+    display: block;
+    padding: 12px 14px;
+    border: 1px solid #38434B;
+    border-radius: 10px;
+    background: #22272B;
+    color: #A7B0B6;
+    font-size: 14px;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.skill-card:hover {
+    border-color: #70B5F9;
+    color: #FFFFFF;
+    background: rgba(10, 102, 194, 0.15);
+}
+
+.skill-option input:checked + .skill-card {
+    border-color: #0A66C2;
+    background: #0A66C2;
+    color: #FFFFFF;
+    font-weight: 600;
+    box-shadow: 0 0 0 2px rgba(112, 181, 249, 0.25);
+}
+
+@media (max-width: 700px) {
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 450px) {
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+}
