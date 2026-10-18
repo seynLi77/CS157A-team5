@@ -45,7 +45,7 @@
     </div>
     <div class="nav-actions">
       <a href="${pageContext.request.contextPath}/login" class="btn btn-ghost">Log in</a>
-      <a href="#" class="btn btn-primary" data-dummy-link>Sign up</a>
+      <a href="<%= request.getContextPath() %>/signup"   class="btn btn-primary"> Sign up</a>
       <button class="hamburger" id="hamburger-btn" aria-label="Menu" aria-expanded="false">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
           <line x1="3" y1="6" x2="21" y2="6"></line>

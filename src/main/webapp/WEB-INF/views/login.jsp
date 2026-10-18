@@ -126,9 +126,12 @@
             </button>
         </form>
 
-        <p class="signup-text">
+       <p class="signup-text">
             Don't have an account?
-            <a href="#">Sign up</a>
+
+            <a href="<%= request.getContextPath() %>/signup">
+                Sign up
+            </a>
         </p>
 
     </section>
