@@ -45,7 +45,7 @@ public class LoginServlet extends HttpServlet {
 
             session.setAttribute("email", email);
 
-            response.sendRedirect("home");
+            response.sendRedirect(request.getContextPath() + "/dashboard");
         } else {
             request.setAttribute(
                     "error",
