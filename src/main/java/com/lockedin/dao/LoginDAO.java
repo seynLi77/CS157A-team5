@@ -3,7 +3,6 @@ package com.lockedin.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import com.lockedin.util.DBConnection;
 
@@ -14,12 +13,6 @@ import com.lockedin.util.DBConnection;
  */
 public class LoginDAO {
 
-	/**
-	 * Returns the number of currently open job postings.
-	 *
-	 * @return number of open jobs
-	 * @throws SQLException if the database query fails
-	 */
     public boolean validateUser(String email, String password) {
 
 		String sql =

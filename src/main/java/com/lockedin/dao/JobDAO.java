@@ -23,7 +23,7 @@ public class JobDAO {
 	public int getOpenJobCount() throws SQLException {
 
 		String sql = "SELECT COUNT(*) " +
-				"FROM job_postings " +
+				"FROM job_posting " +
 				"WHERE is_open = TRUE";
 
 		try (
