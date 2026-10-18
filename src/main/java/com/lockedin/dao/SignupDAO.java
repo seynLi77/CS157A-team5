@@ -15,12 +15,7 @@ import com.lockedin.util.DBConnection;
  */
 public class SignupDAO {
 
-    /*
-     * Returns:
-     * null = signup successful
-     * String = error message
-     */
-    public String createUser(
+    public boolean createUser(
             String firstName,
             String lastName,
             String email,
@@ -67,7 +62,12 @@ public class SignupDAO {
 
                         if (!keys.next()) {
                             connection.rollback();
-                            return "Could not generate user ID.";
+
+                            System.err.println(
+                                    "Could not generate user ID."
+                            );
+
+                            return false;
                         }
 
                         userId = keys.getInt(1);
@@ -111,14 +111,19 @@ public class SignupDAO {
                     );
 
                 } else {
+
                     connection.rollback();
-                    return "Invalid role selected: " + role;
+
+                    System.err.println(
+                            "Invalid role selected: " + role
+                    );
+
+                    return false;
                 }
 
                 connection.commit();
 
-                // null means successful signup
-                return null;
+                return true;
 
             } catch (Exception e) {
 
@@ -128,16 +133,26 @@ public class SignupDAO {
                     rollbackError.printStackTrace();
                 }
 
+                System.err.println(
+                        "Signup failed: "
+                                + getErrorMessage(e)
+                );
+
                 e.printStackTrace();
 
-                return getErrorMessage(e);
+                return false;
             }
 
         } catch (SQLException e) {
 
+            System.err.println(
+                    "Database connection failed: "
+                            + getErrorMessage(e)
+            );
+
             e.printStackTrace();
 
-            return getErrorMessage(e);
+            return false;
         }
     }
 
@@ -216,7 +231,9 @@ public class SignupDAO {
             String[] skillIds)
             throws SQLException {
 
-        if (skillIds == null || skillIds.length == 0) {
+        if (skillIds == null ||
+                skillIds.length == 0) {
+
             return;
         }
 
@@ -230,10 +247,7 @@ public class SignupDAO {
 
             for (String skillId : skillIds) {
 
-                statement.setInt(
-                        1,
-                        userId
-                );
+                statement.setInt(1, userId);
 
                 statement.setInt(
                         2,
@@ -262,7 +276,7 @@ public class SignupDAO {
                         sqlException.getErrorCode();
 
                 if (errorCode == 1062) {
-                    return "This email is already registered.";
+                    return "Email already exists.";
                 }
 
                 if (errorCode == 1054) {
@@ -281,7 +295,7 @@ public class SignupDAO {
                 }
 
                 if (errorCode == 1364) {
-                    return "A required field is missing: "
+                    return "Required field is missing: "
                             + sqlException.getMessage();
                 }
 
@@ -292,6 +306,7 @@ public class SignupDAO {
             cause = cause.getCause();
         }
 
-        return "Unexpected error: " + e.getMessage();
+        return "Unexpected error: "
+                + e.getMessage();
     }
 }
