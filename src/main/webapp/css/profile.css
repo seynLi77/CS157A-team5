@@ -248,3 +248,18 @@ footer {
         font-size: 13px;
     }
 }
+
+.logout-button {
+    display: inline-block;
+    padding: 10px 18px;
+    border-radius: 8px;
+    background-color: #0A66C2;
+    color: #FFFFFF;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+.logout-button:hover {
+    background-color: #084F96;
+}

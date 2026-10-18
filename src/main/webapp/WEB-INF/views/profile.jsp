@@ -4,24 +4,19 @@
     Author: Elaine
 --%>
 
-<%@ page contentType="text/html;charset=UTF-8"
-         language="java" %>
-
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Set" %>
 
 <%
     Map<String, Object> profile =
-            (Map<String, Object>)
-            request.getAttribute("profile");
+            (Map<String, Object>) request.getAttribute("profile");
 
     String role = "";
 
-    if (profile != null &&
-            profile.get("role") != null) {
-
-        role = (String) profile.get("role");
+    if (profile != null && profile.get("role") != null) {
+        role = String.valueOf(profile.get("role"));
     }
 
     String error =
@@ -29,6 +24,12 @@
 
     String success =
             (String) request.getAttribute("success");
+
+    List<Map<String, Object>> skills =
+            (List<Map<String, Object>>) request.getAttribute("skills");
+
+    Set<Integer> selectedSkillIds =
+            (Set<Integer>) request.getAttribute("selectedSkillIds");
 %>
 
 <!DOCTYPE html>
@@ -53,33 +54,90 @@
 
         <a class="logo"
            href="<%= request.getContextPath() %>/dashboard">
-            <span class="logo-mark">🔒</span>
+
+            <span class="logo-mark">
+                <svg width="26"
+                     height="26"
+                     viewBox="0 0 24 24">
+
+                    <defs>
+                        <mask id="profile-keyhole-mask">
+
+                            <rect x="0"
+                                  y="0"
+                                  width="24"
+                                  height="24"
+                                  fill="#FFFFFF"/>
+
+                            <circle cx="12"
+                                    cy="16.4"
+                                    r="1.6"
+                                    fill="#000000"/>
+
+                            <path d="M10.9 19.2H13.1L12.6 22.0
+                                     C12.6 22.5 11.4 22.5 11.4 22.0Z"
+                                  fill="#000000"/>
+                        </mask>
+                    </defs>
+
+                    <path d="M7 9V8C7 4.5 9.5 2 12 2
+                             C14.5 2 17 4.5 17 8V9"
+                          stroke="#0A66C2"
+                          stroke-width="4"
+                          stroke-linecap="round"
+                          fill="none"/>
+
+                    <rect x="3.5"
+                          y="11"
+                          width="17"
+                          height="12"
+                          rx="4"
+                          fill="#0A66C2"
+                          mask="url(#profile-keyhole-mask)"/>
+                </svg>
+            </span>
+
             LockedIn
         </a>
 
         <div class="nav-actions">
+
             <a href="<%= request.getContextPath() %>/dashboard"
                class="back-link">
                 Back to dashboard
             </a>
+
+            <a href="<%= request.getContextPath() %>/logout"
+               class="logout-button">
+                Sign out
+            </a>
+
         </div>
 
     </div>
 </nav>
+
 
 <main class="profile-page">
 
     <section class="profile-card">
 
         <div class="profile-heading">
-            <p class="eyebrow">ACCOUNT SETTINGS</p>
 
-            <h1>My Profile</h1>
+            <p class="eyebrow">
+                ACCOUNT SETTINGS
+            </p>
+
+            <h1>
+                My Profile
+            </h1>
 
             <p>
                 Update your personal information below.
             </p>
+
         </div>
+
 
         <% if (error != null) { %>
 
@@ -89,6 +147,7 @@
 
         <% } %>
 
+
         <% if (success != null) { %>
 
             <div class="message success-message">
@@ -97,243 +156,304 @@
 
         <% } %>
 
+
         <% if (profile != null) { %>
 
-        <form method="post"
-              action="<%= request.getContextPath() %>/profile">
+            <form method="post"
+                  action="<%= request.getContextPath() %>/profile">
 
-            <div class="form-section">
-                <h2>Basic Information</h2>
+                <div class="form-section">
 
-                <div class="two-column">
+                    <h2>
+                        Basic Information
+                    </h2>
+
+
+                    <div class="two-column">
+
+                        <div class="form-group">
+
+                            <label for="first_name">
+                                First name
+                            </label>
+
+                            <input type="text"
+                                   id="first_name"
+                                   name="first_name"
+                                   value="<%= profile.get("first_name") == null
+                                           ? ""
+                                           : profile.get("first_name") %>"
+                                   required>
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="last_name">
+                                Last name
+                            </label>
+
+                            <input type="text"
+                                   id="last_name"
+                                   name="last_name"
+                                   value="<%= profile.get("last_name") == null
+                                           ? ""
+                                           : profile.get("last_name") %>"
+                                   required>
+                        </div>
+
+                    </div>
+
 
                     <div class="form-group">
-                        <label for="first_name">
-                            First name
+
+                        <label for="email">
+                            Email
+                        </label>
+
+                        <input type="email"
+                               id="email"
+                               value="<%= profile.get("email") == null
+                                       ? ""
+                                       : profile.get("email") %>"
+                               readonly>
+
+                        <small>
+                            Email cannot be changed here.
+                        </small>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            New password
+                        </label>
+
+                        <input type="password"
+                               id="password"
+                               name="password"
+                               placeholder="Leave blank to keep current password">
+
+                        <small>
+                            Leave this blank if you do not want to change it.
+                        </small>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="role">
+                            Role
                         </label>
 
                         <input type="text"
-                               id="first_name"
-                               name="first_name"
-                               value="<%= profile.get("first_name") %>"
-                               required>
-                    </div>
+                               id="role"
+                               value="<%= role %>"
+                               readonly>
 
-                    <div class="form-group">
-                        <label for="last_name">
-                            Last name
-                        </label>
-
-                        <input type="text"
-                               id="last_name"
-                               name="last_name"
-                               value="<%= profile.get("last_name") %>"
-                               required>
                     </div>
 
                 </div>
 
-                <div class="form-group">
-                    <label for="email">
-                        Email
-                    </label>
 
-                    <input type="email"
-                           id="email"
-                           value="<%= profile.get("email") %>"
-                           readonly>
+                <% if ("job_seeker".equals(role)) { %>
 
-                    <small>
-                        Email cannot be changed here.
-                    </small>
-                </div>
+                    <div class="form-section">
 
-                <div class="form-group">
-                    <label for="password">
-                        New password
-                    </label>
+                        <h2>
+                            Job Seeker Information
+                        </h2>
 
-                    <input type="password"
-                           id="password"
-                           name="password"
-                           placeholder="Leave blank to keep current password">
 
-                    <small>
-                        Leave this blank if you do not want to change it.
-                    </small>
-                </div>
+                        <div class="form-group">
 
-                <div class="form-group">
-                    <label>
-                        Role
-                    </label>
+                            <label for="location">
+                                Location
+                            </label>
 
-                    <input type="text"
-                           value="<%= role %>"
-                           readonly>
-                </div>
+                            <input type="text"
+                                   id="location"
+                                   name="location"
+                                   value="<%= profile.get("location") == null
+                                           ? ""
+                                           : profile.get("location") %>">
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="resume_link">
+                                Resume link
+                            </label>
+
+                            <input type="text"
+                                   id="resume_link"
+                                   name="resume_link"
+                                   value="<%= profile.get("resume_link") == null
+                                           ? ""
+                                           : profile.get("resume_link") %>"
+                                   placeholder="Paste your resume link">
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="experience">
+                                Experience
+                            </label>
+
+                            <textarea id="experience"
+                                      name="experience"><%= profile.get("experience") == null
+                                      ? ""
+                                      : profile.get("experience") %></textarea>
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="education">
+                                Education
+                            </label>
+
+                            <textarea id="education"
+                                      name="education"><%= profile.get("education") == null
+                                      ? ""
+                                      : profile.get("education") %></textarea>
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="skill_ids">
+                                Skills
+                            </label>
+
+                            <select id="skill_ids"
+                                    name="skill_ids"
+                                    multiple
+                                    size="8">
+
+                                <% if (skills != null) { %>
+
+                                    <% for (Map<String, Object> skill : skills) {
+
+                                        int skillId =
+                                                (Integer) skill.get("skill_id");
+
+                                        String skillName =
+                                                String.valueOf(skill.get("name"));
+
+                                        boolean selected =
+                                                selectedSkillIds != null
+                                                && selectedSkillIds.contains(skillId);
+                                    %>
+
+                                        <option value="<%= skillId %>"
+                                                <%= selected ? "selected" : "" %>>
+                                            <%= skillName %>
+                                        </option>
+
+                                    <% } %>
+
+                                <% } %>
+
+                            </select>
+
+                            <small>
+                                Hold Ctrl or Command to select multiple skills.
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                <% } %>
+
+
+                <% if ("recruiter".equals(role)) { %>
+
+                    <div class="form-section">
+
+                        <h2>
+                            Recruiter Information
+                        </h2>
+
+
+                        <div class="form-group">
+
+                            <label for="company">
+                                Company
+                            </label>
+
+                            <input type="text"
+                                   id="company"
+                                   name="company"
+                                   value="<%= profile.get("company") == null
+                                           ? ""
+                                           : profile.get("company") %>"
+                                   required>
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="industry">
+                                Industry
+                            </label>
+
+                            <input type="text"
+                                   id="industry"
+                                   name="industry"
+                                   value="<%= profile.get("industry") == null
+                                           ? ""
+                                           : profile.get("industry") %>"
+                                   required>
+                        </div>
+
+                    </div>
+
+                <% } %>
+
+
+                <% if ("admin".equals(role)) { %>
+
+                    <div class="form-section">
+
+                        <h2>
+                            Administrator Information
+                        </h2>
+
+                        <p>
+                            Administrator profile information is managed by the system.
+                        </p>
+
+                    </div>
+
+                <% } %>
+
+
+                <button type="submit"
+                        class="save-button">
+                    Save changes
+                </button>
+
+            </form>
+
+        <% } else { %>
+
+            <div class="message error-message">
+                Profile information could not be loaded.
             </div>
-
-            <% if ("job_seeker".equals(role)) { %>
-
-            <div class="form-section">
-                <h2>Job Seeker Information</h2>
-
-                <div class="form-group">
-                    <label for="location">
-                        Location
-                    </label>
-
-                    <input type="text"
-                           id="location"
-                           name="location"
-                           value="<%= profile.get("location") == null
-                                   ? ""
-                                   : profile.get("location") %>">
-                </div>
-
-                <div class="form-group">
-                    <label for="resume_link">
-                        Resume link
-                    </label>
-
-                    <input type="text"
-                           id="resume_link"
-                           name="resume_link"
-                           value="<%= profile.get("resume_link") == null
-                                   ? ""
-                                   : profile.get("resume_link") %>"
-                           placeholder="Paste your resume link">
-                </div>
-
-                <div class="form-group">
-                    <label for="experience">
-                        Experience
-                    </label>
-
-                    <textarea id="experience"
-                              name="experience"><%= profile.get("experience") == null
-                                ? ""
-                                : profile.get("experience") %></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="education">
-                        Education
-                    </label>
-
-                    <textarea id="education"
-                              name="education"><%= profile.get("education") == null
-                                ? ""
-                                : profile.get("education") %></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="skill_ids">
-                        Skills
-                    </label>
-
-                    <%
-                        List<Map<String, Object>> skills =
-                                (List<Map<String, Object>>)
-                                request.getAttribute("skills");
-
-                        Set<Integer> selectedSkillIds =
-                                (Set<Integer>)
-                                request.getAttribute(
-                                        "selectedSkillIds"
-                                );
-                    %>
-
-                    <select id="skill_ids"
-                            name="skill_ids"
-                            multiple
-                            size="8">
-
-                        <% if (skills != null) {
-                            for (Map<String, Object> skill : skills) {
-
-                                int skillId =
-                                        (Integer)
-                                        skill.get("skill_id");
-
-                                String skillName =
-                                        (String)
-                                        skill.get("name");
-
-                                boolean selected =
-                                        selectedSkillIds != null &&
-                                        selectedSkillIds.contains(skillId);
-                        %>
-
-                            <option value="<%= skillId %>"
-                                    <%= selected
-                                            ? "selected"
-                                            : "" %>>
-                                <%= skillName %>
-                            </option>
-
-                        <%  }
-                           }
-                        %>
-                    </select>
-
-                    <small>
-                        Hold Ctrl or Command to select multiple skills.
-                    </small>
-                </div>
-            </div>
-
-            <% } %>
-
-            <% if ("recruiter".equals(role)) { %>
-
-            <div class="form-section">
-                <h2>Recruiter Information</h2>
-
-                <div class="form-group">
-                    <label for="company">
-                        Company
-                    </label>
-
-                    <input type="text"
-                           id="company"
-                           name="company"
-                           value="<%= profile.get("company") == null
-                                   ? ""
-                                   : profile.get("company") %>"
-                           required>
-                </div>
-
-                <div class="form-group">
-                    <label for="industry">
-                        Industry
-                    </label>
-
-                    <input type="text"
-                           id="industry"
-                           name="industry"
-                           value="<%= profile.get("industry") == null
-                                   ? ""
-                                   : profile.get("industry") %>"
-                           required>
-                </div>
-            </div>
-
-            <% } %>
-
-            <button type="submit"
-                    class="save-button">
-                Save changes
-            </button>
-
-        </form>
 
         <% } %>
 
     </section>
 
 </main>
+
 
 <footer>
     <p>
