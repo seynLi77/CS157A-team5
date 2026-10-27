@@ -1,5 +1,5 @@
 -- LockedIn database schema and sample data
--- Author: Elaine
+-- Author: Elaine and Jumana
 
 CREATE DATABASE IF NOT EXISTS lockedin_db;
 
@@ -138,16 +138,31 @@ CREATE TABLE IF NOT EXISTS application (
     job_seeker_id INT NOT NULL,
     job_id INT NOT NULL,
     status VARCHAR(50) NOT NULL,
+    resume_link VARCHAR(255) NOT NULL DEFAULT '',
+    message TEXT,
     submission_date DATE NOT NULL,
     last_updated DATE NOT NULL,
 
-    FOREIGN KEY (job_seeker_id)
-        REFERENCES job_seeker(user_id)
-        ON DELETE CASCADE,
+    CONSTRAINT uq_application_seeker_job
+        UNIQUE (job_seeker_id, job_id),
 
-    FOREIGN KEY (job_id)
-        REFERENCES job_posting(job_id)
-        ON DELETE CASCADE
+    FOREIGN KEY (job_seeker_id) REFERENCES job_seeker(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (job_id) REFERENCES job_posting(job_id) ON DELETE CASCADE
+) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS saved_job (
+    job_seeker_id INT NOT NULL,
+    job_id INT NOT NULL,
+    priority VARCHAR(10) NOT NULL DEFAULT 'Medium',
+    saved_date DATE NOT NULL,
+
+    PRIMARY KEY (job_seeker_id, job_id),
+
+    CONSTRAINT chk_saved_job_priority
+        CHECK (priority IN ('High', 'Medium', 'Low')),
+
+    FOREIGN KEY (job_seeker_id) REFERENCES job_seeker(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (job_id) REFERENCES job_posting(job_id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 
@@ -597,6 +612,18 @@ VALUES
 
     (5010, 110, 1010, 'Rejected',
      '2026-09-20', '2026-09-29');
+
+
+-- =========================
+-- Saved job
+-- =========================
+
+INSERT INTO saved_job (job_seeker_id, job_id, priority, saved_date)
+VALUES
+    (101, 1002, 'High', '2026-09-12'),
+    (101, 1003, 'Low', '2026-09-13'),
+    (101, 1008, 'Medium', '2026-09-14'),
+    (102, 1001, 'Medium', '2026-09-15');
 
 
 -- =========================
