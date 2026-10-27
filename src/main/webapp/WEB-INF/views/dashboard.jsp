@@ -1,7 +1,7 @@
 <%--
     Displays the user's dashboard.
 
-    Author: Elaine and Jumana
+    Author: Elaine and Jumana 
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
