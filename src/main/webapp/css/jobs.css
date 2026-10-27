@@ -1,0 +1,88 @@
+.page { padding: 110px 0 72px; min-height: calc(100vh - 220px); }
+.wrap.narrow { max-width: 720px; }
+
+.page-title {
+  font-family: var(--font-header);
+  font-size: 34px; font-weight: 600; letter-spacing: -0.01em;
+  margin: 0 0 20px;
+}
+
+.section-title {
+  font-family: var(--font-header);
+  font-size: 22px; font-weight: 600;
+  margin: 36px 0 14px;
+}
+
+.empty { color: var(--text-secondary); }
+.inline-link { color: var(--blue-light); margin-left: 6px; }
+
+/* flash messages */
+.flash { padding: 12px 16px; border-radius: var(--radius); margin: 0 0 20px; font-size: 14.5px; }
+.flash-success { background: rgba(45, 164, 78, 0.16); color: #4ADE80; }
+.flash-error { background: rgba(220, 100, 60, 0.16); color: #F0876B; }
+
+/* job list */
+.job-row {
+  display: flex; justify-content: space-between; gap: 24px;
+  padding: 20px 22px; margin-bottom: 14px;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+}
+.job-main h2 { margin: 0 0 4px; font-family: var(--font-header); font-size: 20px; }
+.job-main p { margin: 10px 0 0; color: var(--text-secondary); font-size: 14.5px; }
+.job-meta { color: var(--text-secondary); font-size: 13.5px; }
+.job-actions { display: flex; align-items: flex-start; gap: 10px; flex-shrink: 0; }
+.job-actions form { margin: 0; }
+
+/* buttons / pills */
+.btn-small { padding: 6px 14px; font-size: 13px; }
+.pill { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+.pill-saved { background: rgba(112, 181, 249, 0.15); color: var(--blue-light); }
+.pill-applied { background: rgba(45, 164, 78, 0.18); color: #4ADE80; }
+.pill-closed { background: rgba(220, 100, 60, 0.18); color: #F0876B; margin-left: 6px; }
+.pill-status { background: rgba(39, 70, 144, 0.28); color: #8FA9E0; }
+
+/* tables */
+.table-scroll { overflow-x: auto; }
+.data-table {
+  width: 100%; border-collapse: collapse;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+}
+.data-table th, .data-table td {
+  padding: 12px 16px; text-align: left;
+  border-bottom: 1px solid var(--border);
+  font-size: 14.5px; vertical-align: middle;
+}
+.data-table th {
+  color: var(--text-secondary); font-size: 12.5px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.data-table tr:last-child td { border-bottom: none; }
+.row-actions { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
+.inline-form { display: inline-flex; margin: 0; gap: 6px; }
+
+.priority-select {
+  background: var(--bg-elevated); color: var(--text);
+  border: 1.5px solid var(--border); border-radius: 16px;
+  padding: 5px 12px; font-family: inherit; font-size: 13px; font-weight: 600;
+}
+.priority-high { border-color: #F0876B; color: #F0876B; }
+.priority-medium { border-color: var(--blue-light); color: var(--blue-light); }
+.priority-low { border-color: var(--text-tertiary); color: var(--text-secondary); }
+
+/* apply form */
+.form-card {
+  margin-top: 24px; padding: 24px;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+}
+.form-card label { display: block; margin: 16px 0 6px; font-weight: 600; font-size: 14px; }
+.form-card label:first-of-type { margin-top: 0; }
+.form-card input[type="text"], .form-card textarea {
+  width: 100%; padding: 10px 12px;
+  background: var(--bg-elevated); color: var(--text);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  font-family: inherit; font-size: 14.5px;
+}
+.form-card small { display: block; margin-top: 6px; color: var(--text-tertiary); }
+.form-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 22px; }
+
+@media (max-width: 720px) { .job-row { flex-direction: column; } }
