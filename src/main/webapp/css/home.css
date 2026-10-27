@@ -882,3 +882,5 @@ footer {
   outline: 2px solid var(--blue-light);
   outline-offset: 2px;
 }
+/* Home search suggestions now link to real job searches. */
+.tag-row a.tag-btn { display: inline-block; text-decoration: none; }

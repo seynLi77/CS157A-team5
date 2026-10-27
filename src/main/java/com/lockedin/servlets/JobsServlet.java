@@ -37,7 +37,14 @@ public class JobsServlet extends HttpServlet {
                 return;
             }
 
-            request.setAttribute("jobs", jobDAO.getOpenJobsForSeeker(jobSeekerId));
+            String query = request.getParameter("q");
+            query = query == null ? "" : query.trim();
+            if (query.length() > 100) {
+                query = query.substring(0, 100);
+            }
+
+            request.setAttribute("query", query);
+            request.setAttribute("jobs", jobDAO.getOpenJobsForSeeker(jobSeekerId, query));
             SessionUtil.moveFlashToRequest(request);
 
             request.getRequestDispatcher("/WEB-INF/views/jobs.jsp")

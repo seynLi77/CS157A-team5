@@ -8,6 +8,8 @@
             (List<Map<String, Object>>) request.getAttribute("jobs");
 
     String ctx = request.getContextPath();
+    String query = (String) request.getAttribute("query");
+    if (query == null) query = "";
 %>
 
 <!DOCTYPE html>
@@ -57,6 +59,27 @@
 
         <h1 class="page-title">Open jobs</h1>
 
+        <form class="job-search" method="get" action="<%= ctx %>/jobs" role="search">
+            <label for="job-query" class="visually-hidden">Search open jobs</label>
+            <input id="job-query" name="q" type="search" maxlength="100"
+                   placeholder="Search titles, companies, locations, or skills"
+                   value="<%= HtmlUtil.escape(query) %>">
+            <button type="submit" class="btn btn-primary">Search</button>
+            <% if (!query.isEmpty()) { %>
+                <a href="<%= ctx %>/jobs" class="btn btn-ghost">Clear</a>
+            <% } %>
+        </form>
+
+        <p class="job-results-summary" aria-live="polite">
+            <%= jobs == null ? 0 : jobs.size() %> open
+            <%= jobs != null && jobs.size() == 1 ? "job" : "jobs" %>
+            <% if (!query.isEmpty()) { %>
+                matching “<%= HtmlUtil.escape(query) %>”
+            <% } else { %>
+                ranked by your skills and location
+            <% } %>
+        </p>
+
         <% if (request.getAttribute("flashSuccess") != null) { %>
             <div class="flash flash-success">
                 <%= HtmlUtil.escape(request.getAttribute("flashSuccess")) %>
@@ -70,12 +93,17 @@
         <% } %>
 
         <% if (jobs == null || jobs.isEmpty()) { %>
-            <p class="empty">There are no open jobs right now.</p>
+            <p class="empty">
+                <%= query.isEmpty() ? "There are no open jobs right now."
+                        : "No open jobs match your search. Try a different keyword." %>
+            </p>
         <% } else {
                for (Map<String, Object> job : jobs) {
                    Object salary = job.get("salary");
                    String savedPriority = (String) job.get("saved_priority");
                    boolean applied = (Boolean) job.get("applied");
+                   int matchedSkills = ((Number) job.get("matched_skills")).intValue();
+                   int locationPoints = ((Number) job.get("location_points")).intValue();
         %>
 
         <article class="job-row">
@@ -91,6 +119,16 @@
                         · <%= String.format("$%,.0f", salary) %>
                     <% } %>
                     · Apply by <%= job.get("deadline") %>
+                </div>
+
+                <div class="job-match-details" aria-label="Job match details">
+                    <span class="match-chip"><%= matchedSkills %> matching
+                        <%= matchedSkills == 1 ? "skill" : "skills" %></span>
+                    <% if (locationPoints == 3) { %>
+                        <span class="match-chip">Location match</span>
+                    <% } else if (locationPoints == 1) { %>
+                        <span class="match-chip">Remote option</span>
+                    <% } %>
                 </div>
 
                 <p><%= HtmlUtil.escape(job.get("description")) %></p>

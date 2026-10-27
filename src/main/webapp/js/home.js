@@ -1,7 +1,7 @@
 // ==========================================================================
 // LockedIn — Home Page Interactions
-// Everything here is intentionally "dummy": buttons/search have hover and
-// focus states but don't navigate or filter anything real.
+// The search bar and job category links navigate to the real /jobs page.
+// Other promotional links are placeholders until those features are ready.
 // ==========================================================================
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -109,25 +109,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   }
-
-  // Dummy search submit — does nothing but doesn't error either
-  var searchForm = document.getElementById('dummy-search-form');
-  if (searchForm) {
-    searchForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-    });
-  }
-
-  // -------------------------------------------------------------
-  // Dummy tag filter buttons — toggle visual state only
-  // -------------------------------------------------------------
-  var tagButtons = document.querySelectorAll('.tag-btn');
-  tagButtons.forEach(function (btn) {
-    btn.addEventListener('click', function (e) {
-      e.preventDefault();
-      btn.classList.toggle('active');
-    });
-  });
 
   // -------------------------------------------------------------
   // Dummy CTA buttons (log in / sign up / explore) — hover state

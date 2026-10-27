@@ -70,13 +70,15 @@
     <h1>Lock in.<br><span class="accent">Find a job.</span></h1>
     <p class="stat-line"><strong>${openJobCount}</strong> jobs ready to be found.</p>
 
-    <form id="dummy-search-form" class="search-bar">
+    <form id="home-search-form" class="search-bar" method="get"
+          action="<%= request.getContextPath() %>/jobs" role="search">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <circle cx="11" cy="11" r="8"></circle>
         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
       </svg>
       <div class="search-input-wrap">
-        <input type="text" id="search-input" autocomplete="off">
+        <input type="search" id="search-input" name="q" maxlength="100"
+               autocomplete="off" aria-label="Search jobs">
         <span class="search-placeholder-anim" id="search-placeholder-anim"></span>
       </div>
       <button type="submit" class="search-submit" aria-label="Search">
@@ -88,10 +90,10 @@
     </form>
 
     <div class="tag-row">
-      <button class="tag-btn">Software Engineering</button>
-      <button class="tag-btn">Remote</button>
-      <button class="tag-btn">Internship</button>
-      <button class="tag-btn">Full-time</button>
+      <a class="tag-btn" href="<%= request.getContextPath() %>/jobs?q=Software">Software</a>
+      <a class="tag-btn" href="<%= request.getContextPath() %>/jobs?q=Remote">Remote</a>
+      <a class="tag-btn" href="<%= request.getContextPath() %>/jobs?q=Data">Data</a>
+      <a class="tag-btn" href="<%= request.getContextPath() %>/jobs?q=Full-time">Full-time</a>
     </div>
   </div>
 </section>
