@@ -3,7 +3,7 @@ package com.lockedin.servlets;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import com.lockedin.dao.ApplicationDAO;
+import com.lockedin.dao.DashboardDAO;
 import com.lockedin.dao.SavedJobDAO;
 import com.lockedin.util.SessionUtil;
 
@@ -24,7 +24,7 @@ import jakarta.servlet.http.HttpSession;
 public class DashboardServlet extends HttpServlet {
 
     private final SavedJobDAO savedJobDAO = new SavedJobDAO();
-    private final ApplicationDAO applicationDAO = new ApplicationDAO();
+    private final DashboardDAO dashboardDAO = new DashboardDAO();
 
     @Override
     protected void doGet(
@@ -55,8 +55,8 @@ public class DashboardServlet extends HttpServlet {
                         savedJobDAO.getSavedJobs(jobSeekerId));
 
                 request.setAttribute(
-                        "applications",
-                        applicationDAO.getApplications(jobSeekerId));
+                        "dashboardRows",
+                        dashboardDAO.getJobSeekerDashboard(jobSeekerId));
             }
         } catch (SQLException e) {
             throw new ServletException(

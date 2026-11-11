@@ -14,8 +14,8 @@
     List<Map<String, Object>> savedJobs =
             (List<Map<String, Object>>) request.getAttribute("savedJobs");
 
-    List<Map<String, Object>> applications =
-            (List<Map<String, Object>>) request.getAttribute("applications");
+    List<Map<String, Object>> dashboardRows =
+            (List<Map<String, Object>>) request.getAttribute("dashboardRows");
 
     String ctx = request.getContextPath();
 %>
@@ -36,6 +36,34 @@
 
     <link rel="stylesheet"
           href="<%= request.getContextPath() %>/css/jobs.css">
+
+    <style>
+        .dashboard-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin: 1.5rem 0 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+        }
+
+        .dashboard-tab {
+            border: 0;
+            border-bottom: 3px solid transparent;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.62);
+            cursor: pointer;
+            font: inherit;
+            padding: 0.8rem 1rem;
+        }
+
+        .dashboard-tab.active {
+            border-bottom-color: #0A66C2;
+            color: #ffffff;
+        }
+
+        .dashboard-tab-panel[hidden] {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -143,6 +171,28 @@
             </div>
         <% } %>
 
+        <div class="dashboard-tabs" role="tablist" aria-label="Dashboard sections">
+            <button type="button"
+                    class="dashboard-tab active"
+                    role="tab"
+                    aria-selected="true"
+                    aria-controls="saved-jobs-panel"
+                    onclick="showDashboardTab('saved-jobs-panel', this)">
+                Saved jobs
+            </button>
+
+            <button type="button"
+                    class="dashboard-tab"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="applications-panel"
+                    onclick="showDashboardTab('applications-panel', this)">
+                Your applications
+            </button>
+        </div>
+
+        <section id="saved-jobs-panel" class="dashboard-tab-panel" role="tabpanel">
+
         <h2 class="section-title">Saved jobs</h2>
 
         <% if (savedJobs.isEmpty()) { %>
@@ -247,10 +297,16 @@
 
         <% } %>
 
+        </section>
+
+        <section id="applications-panel"
+                 class="dashboard-tab-panel"
+                 role="tabpanel"
+                 hidden>
 
         <h2 class="section-title">Your applications</h2>
 
-        <% if (applications == null || applications.isEmpty()) { %>
+        <% if (dashboardRows == null || dashboardRows.isEmpty()) { %>
 
             <p class="empty">You haven't applied to any jobs yet.</p>
 
@@ -263,18 +319,37 @@
                 <tr>
                     <th>Job</th>
                     <th>Company</th>
+                    <th>Location</th>
+                    <th>Salary</th>
                     <th>Applied on</th>
                     <th>Status</th>
+                    <th>Interview date</th>
+                    <th>Interview time</th>
+                    <th>Interview location</th>
+                    <th>Interview status</th>
                 </tr>
             </thead>
 
             <tbody>
-            <% for (Map<String, Object> app : applications) { %>
+            <% for (Map<String, Object> app : dashboardRows) {
+                   Object displayStatus = app.get("display_status");
+                   Object submissionDate = app.get("submission_date");
+                   Object interviewDate = app.get("interview_date");
+                   Object interviewTime = app.get("interview_time");
+                   Object interviewLocation = app.get("interview_location");
+                   Object interviewStatus = app.get("interview_status");
+            %>
                 <tr>
                     <td><strong><%= HtmlUtil.escape(app.get("job_name")) %></strong></td>
                     <td><%= HtmlUtil.escape(app.get("company")) %></td>
-                    <td><%= app.get("submission_date") %></td>
-                    <td><span class="pill pill-status"><%= HtmlUtil.escape(app.get("status")) %></span></td>
+                    <td><%= HtmlUtil.escape(app.get("job_location")) %></td>
+                    <td><%= app.get("salary") == null ? "—" : app.get("salary") %></td>
+                    <td><%= submissionDate == null ? "—" : submissionDate %></td>
+                    <td><span class="pill pill-status"><%= HtmlUtil.escape(displayStatus) %></span></td>
+                    <td><%= interviewDate == null ? "—" : interviewDate %></td>
+                    <td><%= interviewTime == null ? "—" : interviewTime %></td>
+                    <td><%= interviewLocation == null ? "—" : HtmlUtil.escape(interviewLocation) %></td>
+                    <td><%= interviewStatus == null ? "—" : HtmlUtil.escape(interviewStatus) %></td>
                 </tr>
             <% } %>
             </tbody>
@@ -282,6 +357,8 @@
         </div>
 
         <% } %>
+
+        </section>
 
     </div>
 
@@ -387,6 +464,20 @@
 </main>
 
 <% } %>
+
+<script>
+    function showDashboardTab(panelId, selectedTab) {
+        document.querySelectorAll('.dashboard-tab-panel').forEach(function (panel) {
+            panel.hidden = panel.id !== panelId;
+        });
+
+        document.querySelectorAll('.dashboard-tab').forEach(function (tab) {
+            var isSelected = tab === selectedTab;
+            tab.classList.toggle('active', isSelected);
+            tab.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+        });
+    }
+</script>
 
 
 <footer>
