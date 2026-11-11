@@ -20,6 +20,23 @@ public class DashboardDAO {
     /** Number of days without an update before an application becomes stale. */
     private static final int DEFAULT_STALE_DAYS = 14;
 
+    /** Returns the first name belonging to the authenticated user's email. */
+    public String getFirstNameByEmail(String email) throws SQLException {
+
+        String sql =
+                "SELECT first_name FROM `user` WHERE email = ?";
+
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, email);
+
+            try (ResultSet rs = statement.executeQuery()) {
+                return rs.next() ? rs.getString("first_name") : null;
+            }
+        }
+    }
+
     public List<Map<String, Object>> getJobSeekerDashboard(int jobSeekerId)
             throws SQLException {
         return getJobSeekerDashboard(jobSeekerId, DEFAULT_STALE_DAYS);
