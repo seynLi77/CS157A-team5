@@ -17,6 +17,8 @@
     List<Map<String, Object>> dashboardRows =
             (List<Map<String, Object>>) request.getAttribute("dashboardRows");
 
+    String firstName = (String) request.getAttribute("firstName");
+
     String ctx = request.getContextPath();
 %>
 
@@ -157,7 +159,11 @@
 
     <div class="wrap">
 
-        <h1 class="page-title">Your dashboard</h1>
+        <h1 class="page-title">
+            <%= firstName == null || firstName.trim().isEmpty()
+                    ? "Your dashboard"
+                    : HtmlUtil.escape(firstName) + "'s dashboard" %>
+        </h1>
 
         <% if (request.getAttribute("flashSuccess") != null) { %>
             <div class="flash flash-success">

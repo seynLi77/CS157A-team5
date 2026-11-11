@@ -46,8 +46,14 @@ public class DashboardServlet extends HttpServlet {
         }
 
         try {
+            String email = (String) session.getAttribute("email");
+
+            request.setAttribute(
+                    "firstName",
+                    dashboardDAO.getFirstNameByEmail(email));
+
             Integer jobSeekerId = SessionUtil.getJobSeekerId(
-                    (String) session.getAttribute("email"));
+                    email);
 
             if (jobSeekerId != null) {
                 request.setAttribute(
