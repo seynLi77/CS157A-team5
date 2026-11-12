@@ -28,6 +28,8 @@
   background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
 }
 .job-main h2 { margin: 0 0 4px; font-family: var(--font-header); font-size: 20px; }
+.job-title-link { color: var(--text); text-decoration: none; }
+.job-title-link:hover { color: var(--blue-light); }
 .job-main p { margin: 10px 0 0; color: var(--text-secondary); font-size: 14.5px; }
 .job-meta { color: var(--text-secondary); font-size: 13.5px; }
 .job-actions { display: flex; align-items: flex-start; gap: 10px; flex-shrink: 0; }

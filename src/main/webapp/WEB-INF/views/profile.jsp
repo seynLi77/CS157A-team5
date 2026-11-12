@@ -48,8 +48,8 @@
 
     <title>My Profile — LockedIn</title>
 
-    <link rel="stylesheet"
-          href="<%= request.getContextPath() %>/css/profile.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/home.css?v=3">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/profile.css?v=3">
 
     <style>
         .skill-select {
@@ -106,11 +106,11 @@
 
 </head>
 
-<body>
+<body class="profile-page-shell">
 
 <nav class="navbar">
 
-    <div class="nav-content">
+    <div class="wrap nav-content">
 
         <a class="logo"
            href="<%= request.getContextPath() %>/dashboard">
@@ -545,6 +545,8 @@
     </p>
 
 </footer>
+
+<script src="<%= request.getContextPath() %>/js/home.js?v=3"></script>
 
 </body>
 </html>
