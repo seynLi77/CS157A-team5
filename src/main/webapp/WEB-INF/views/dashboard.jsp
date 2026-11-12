@@ -18,6 +18,7 @@
             (List<Map<String, Object>>) request.getAttribute("dashboardRows");
 
     String firstName = (String) request.getAttribute("firstName");
+    String userRole = (String) request.getAttribute("userRole");
 
     String ctx = request.getContextPath();
 %>
@@ -133,6 +134,13 @@
             <a href="<%= request.getContextPath() %>/jobs"
                class="btn btn-ghost">
                 Browse jobs
+            </a>
+            <% } %>
+
+            <% if ("recruiter".equals(userRole)) { %>
+            <a href="<%= request.getContextPath() %>/recruiter-jobs"
+               class="btn btn-ghost">
+                Manage job postings
             </a>
             <% } %>
 
@@ -484,6 +492,8 @@
         });
     }
 </script>
+
+<script src="<%= request.getContextPath() %>/js/home.js"></script>
 
 
 <footer>

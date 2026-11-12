@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import com.lockedin.dao.DashboardDAO;
+import com.lockedin.dao.ProfileDAO;
 import com.lockedin.dao.SavedJobDAO;
 import com.lockedin.util.SessionUtil;
 
@@ -25,6 +26,7 @@ public class DashboardServlet extends HttpServlet {
 
     private final SavedJobDAO savedJobDAO = new SavedJobDAO();
     private final DashboardDAO dashboardDAO = new DashboardDAO();
+    private final ProfileDAO profileDAO = new ProfileDAO();
 
     @Override
     protected void doGet(
@@ -47,6 +49,9 @@ public class DashboardServlet extends HttpServlet {
 
         try {
             String email = (String) session.getAttribute("email");
+
+            java.util.Map<String, Object> profile = profileDAO.findProfileByEmail(email);
+            request.setAttribute("userRole", profile == null ? null : profile.get("role"));
 
             request.setAttribute(
                     "firstName",

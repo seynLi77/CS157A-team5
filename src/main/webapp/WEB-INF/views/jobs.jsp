@@ -109,7 +109,7 @@
         <article class="job-row">
 
             <div class="job-main">
-                <h2><%= HtmlUtil.escape(job.get("job_name")) %></h2>
+                <h2><a class="job-title-link" href="<%= ctx %>/job?job_id=<%= job.get("job_id") %>"><%= HtmlUtil.escape(job.get("job_name")) %></a></h2>
 
                 <div class="job-meta">
                     <%= HtmlUtil.escape(job.get("company")) %>

@@ -14,11 +14,11 @@
 
     <title>Log in — LockedIn</title>
 
-    <link rel="stylesheet"
-          href="<%= request.getContextPath() %>/css/login.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/home.css?v=3">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/login.css?v=3">
 </head>
 
-<body>
+<body class="login-page-shell">
 
 <nav class="navbar">
     <div class="wrap navbar-inner">
@@ -140,6 +140,8 @@
 <footer>
     <p>© 2026 LockedIn. A student project — CS157A Team 5.</p>
 </footer>
+
+<script src="<%= request.getContextPath() %>/js/home.js?v=3"></script>
 
 </body>
 </html>
