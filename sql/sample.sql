@@ -173,6 +173,7 @@ CREATE TABLE IF NOT EXISTS interview (
     `date` DATE NOT NULL,
     `time` TIME NOT NULL,
     location VARCHAR(150) NOT NULL,
+    message TEXT,
     status VARCHAR(50) NOT NULL,
 
     FOREIGN KEY (application_id)
