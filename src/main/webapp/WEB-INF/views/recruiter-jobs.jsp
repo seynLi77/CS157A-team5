@@ -33,6 +33,10 @@
             LockedIn
         </div>
         <div class="nav-actions">
+            <a class="btn btn-ghost"
+               href="<%=request.getContextPath()%>/interviews">
+                Interviews
+            </a>
             <a class="btn btn-ghost" href="<%=ctx%>/dashboard">Dashboard</a>
             <a class="btn btn-ghost" href="<%=ctx%>/profile">My Profile</a>
             <a class="btn btn-primary" href="<%=ctx%>/logout">Sign out</a>
