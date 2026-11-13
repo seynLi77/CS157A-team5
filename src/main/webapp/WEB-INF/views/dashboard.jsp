@@ -129,6 +129,10 @@
 
 
         <div class="nav-actions">
+            <a class="btn btn-ghost"
+               href="<%=request.getContextPath()%>/interviews">
+                Interviews
+            </a>
 
             <% if (savedJobs != null) { %>
             <a href="<%= request.getContextPath() %>/jobs"
